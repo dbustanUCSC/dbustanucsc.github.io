@@ -4,13 +4,13 @@
   Game Concept Art
   
 #Audio Assets:
-  Jingle.Wav
-  Horse.Wav
+  Jingle.Wav (Made in Studio One)
+  Horse.Wav  (Made in Studio One)
   
 #Image Assets:
-  sonic_sans_on_a_horse.png,
-  Coolnushi sans.png,
-  Game Concept.png
+  sonic_sans_on_a_horse.png (This asset was made in Photoshop.),
+  Coolnushi sans.png (This asset was made in Photoshop.),
+  Game Concept.png (This asset was made in Photoshop.)
   
 #Geometic Shapes:
   Circle and Square behind Coolnushi Games Logo
