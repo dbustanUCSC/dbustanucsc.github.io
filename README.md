@@ -14,6 +14,9 @@
   
 #Geometic Shapes:
   Circle and Square behind Coolnushi Games Logo
+
+#Logotype text:
+  Under Coolnushi (Sonic Sans) Logo
   
 #Multi-line Text Block:
   'Play' - 'Options' - 'Quit' text on Game Menu Scene
