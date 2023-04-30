@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D1.b</title>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.60.0/phaser.js"></script>
+    <script>
+
+        class Intro extends Phaser.Scene {
+            constructor(){
+                super('intro');
+            }
+            create(){
+                this.add.text (this.scale.width/2-150, this.scale.height/2, "Click to Begin.", { fontSize: '32px', fontWeight: 'bold'});
+                this.cameras.main.setBackgroundColor('#ADD8E6');
+                this.input.once('pointerdown', () => {
+                    this.cameras.main.fadeOut(1000);
+                    this.cameras.main.once('camerafadeoutcomplete', () => {
+                        this.scene.start('first');
+                    });
+                });
+            }
+        }
+        
+        class First extends Phaser.Scene {
+            constructor(){
+                super ('first');
+            }
+            preload(){
+                this.load.image('Coolnushi', 'Coolnushi sans.png')
+                this.load.audio('jingle','Jingle.wav')
+            }
+            create(){
+                this.cameras.main.fadeIn(2000);
+                this.cameras.main.setBackgroundColor('#D3D3D3');
+                const Coolnushi = this.add.sprite(this.scale.width/2, -150, 'Coolnushi'); 
+                this.graphics = this.add.graphics({ fillStyle: { color: 0xaa0000} });
+                const rect = this.add.rectangle(this.scale.width/2+30, this.scale.height /2, this.scale.height /2, this.scale.height /2, 0xcccccc).setAlpha(0).setDepth(-1);
+                rect.setScale(0.8);
+                const circ = this.add.circle(this.scale.width/2+30, this.scale.height /2, 300, 0x6666ff).setDepth(-2).setAlpha(1);
+
+                Coolnushi.setScale (0.5, 0.5);
+
+                this.tweens.add({
+                    targets: Coolnushi,
+                    x: this.scale.width /2,
+                    y: this.scale.height /2,
+                    duration: 1500,
+                    ease: 'Power2',
+                    onComplete: () => {
+                    this.tweens.add({
+                    targets: rect,
+                    alpha: 1,
+                    duration: 1000,
+                    ease: 'Linear'
+                 });
+                        this.sound.play('jingle');
+                    }
+                });
+
+
+                this.tweens.add({
+                    targets: Coolnushi,
+                    alpha: 0,
+                    delay: 3000,
+                    ease: 'Linear',
+                    onComplete: () => {
+                        this.cameras.main.fadeOut(1000);
+
+                    this.cameras.main.once('camerafadeoutcomplete', () => {
+                        this.scene.start('second');
+                    });
+                    }
+                });
+            }
+        }
+        class Second extends Phaser.Scene {
+            constructor(){
+                super('second');
+
+            } 
+            preload (){
+                this.load.audio('Horse', 'Horse.wav');
+                this.load.image('CoolnushionHorse', 'sonic_sans_on_a_horse.png');
+            }
+            create (){
+                this.cameras.main.fadeIn(2000);
+                const HorseCover = this.add.sprite(window.innerWidth/2, window.innerHeight/2, 'CoolnushionHorse');
+                HorseCover.setScale(1.05,1);
+                const HorseWAV = this.sound.add('Horse', {loop: true});
+                HorseWAV.play();
+                HorseWAV.setVolume(0.3);
+                this.add.text (50, 30, "Horse", { fontFamily: 'Lobster', fontSize: '128px', fontWeight: 'bold', color: 'black'});
+                this.add.text (50, 400, "Play", { fontFamily: 'Comic Sans MS', fontSize: '64px', fontWeight: 'bold', color: 'black'});
+                this.add.text (50, 800, "Options", { fontFamily: 'Comic Sans MS', fontSize: '64px', fontWeight: 'bold', color: 'black'});
+                this.add.text (500, 800, "Quit", { fontFamily: 'Comic Sans MS', fontSize: '64px', fontWeight: 'bold', color: 'black'});
+                this.input.once('pointerdown', () => {
+                    this.cameras.main.fadeOut(1000);
+
+                    this.cameras.main.once('camerafadeoutcomplete', () => {
+                        HorseWAV.stop();
+                        this.scene.start('Third');
+                    });
+                });
+            }
+        }
+        class Third extends Phaser.Scene {
+            constructor(){
+                super('Third');
+            }
+            preload (){
+                this.load.image('Concept', 'Game Concept.png');
+            }
+            create (){
+                this.cameras.main.fadeIn(2000);
+                this.cameras.main.setBackgroundColor('#000000');
+                const Concept = this.add.sprite(window.innerWidth/2, window.innerHeight/2, 'Concept');
+                Concept.setScale(0.9);
+                this.input.once('pointerdown', () => {
+                    this.cameras.main.fadeOut(1000);
+
+                    this.cameras.main.once('camerafadeoutcomplete', () => {
+                        this.scene.start('intro');
+                    });
+                });
+            }
+        }
+        
+        new Phaser.Game({
+            width: window.innerWidth,
+            height: window.innerHeight,
+            scene: [Intro, First, Second, Third],
+
+            loader: {
+                baseURL: 'assets/'
+            },
+
+            scale: {
+                mode: Phaser.Scale.RESIZE,
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            }
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
